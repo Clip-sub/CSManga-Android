@@ -49,7 +49,7 @@ public class DownloadManga implements Parcelable {
      *
      * @param inputParcel The input parcelable.
      */
-    public DownloadManga(Parcel inputParcel) {
+    private DownloadManga(Parcel inputParcel) {
         _id = inputParcel.readLong();
         if (_id < 0) {
             _id = null;
