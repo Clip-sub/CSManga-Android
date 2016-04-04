@@ -9,6 +9,9 @@ public class FavoriteManga implements Parcelable {
 
     public static final String PARCELABLE_KEY = TAG + ":" + "ParcelableKey";
 
+    /**
+     * Public CREATOR field that generates instances of Parcelable class from a Parcel.
+     */
     public static final Creator<FavoriteManga> CREATOR = new Creator<FavoriteManga>() {
         @Override
         public FavoriteManga createFromParcel(Parcel source) {
