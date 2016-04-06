@@ -100,6 +100,7 @@ public class DiskUtils {
                             + CSMangaApplication.getInstance().getPackageName());
                 } else {
                     storageDirectories.add(rawEmulatedStorageTarget
+                            + File.separator
                             + rawUserId
                             + File.separator
                             + CSMangaApplication.getInstance().getPackageName());
