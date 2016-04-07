@@ -123,6 +123,7 @@ public class GestureImageView extends ImageView {
         // Reset the matrix to identity matrix.
         baseMatrix.reset();
 
+        // Get the image scale, take the smaller value (in compare to 2).
         float widthScale = Math.min(getWidth() / bitmapWidth, 2.00f);
         float heightScale = Math.min(getHeight() / bitmapHeight, 2.00f);
 
@@ -134,5 +135,34 @@ public class GestureImageView extends ImageView {
         } else if (viewType.equals(VIEW_TYPE_FIT_HEIGHT)) {
             actualScale = heightScale;
         }
+
+        // TODO: What happened here...
+        // Multiply the original image matrix, both width and height, to a new "actual scale" value.
+        baseMatrix.postScale(actualScale, actualScale);
+        baseMatrix.postTranslate((getWidth() - bitmapWidth * actualScale) / 2.00f,
+                (getHeight() - bitmapHeight * actualScale) / 2.00f);
+
+        initialized = true;
+    }
+
+    /**
+     * Check if the image view is initialized.
+     *
+     * @return State of the initialized variable.
+     */
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    private float getTransX(Matrix matrix) {
+        matrix.getValues(matrixValues);
+
+        return matrixValues[Matrix.MTRANS_X];
+    }
+
+    private float getTransY(Matrix matrix) {
+        matrix.getValues(matrixValues);
+
+        return matrixValues[Matrix.MTRANS_Y];
     }
 }
