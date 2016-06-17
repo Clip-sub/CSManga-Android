@@ -1,4 +1,4 @@
-package com.clipsub.csmanga.model.download;
+package com.clipsub.csmanga.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

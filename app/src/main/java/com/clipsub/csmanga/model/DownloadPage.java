@@ -1,73 +1,75 @@
-package com.clipsub.csmanga.model.download;
+package com.clipsub.csmanga.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Model for each chapter download.
+ * Model for "DownloadPage" entity.
  */
-public class DownloadChapter implements Parcelable {
+public class DownloadPage implements Parcelable {
 
-    public static final String TAG = DownloadChapter.class.getSimpleName();
+    /**
+     * Class name for logging.
+     */
+    public static final String TAG = DownloadPage.class.getSimpleName();
 
+    /**
+     * Parcelable key for Parcelable implementation of this class.
+     */
     public static final String PARCELABLE_KEY = TAG + ":" + "ParcelableKey";
 
-    public static final Creator<DownloadChapter> CREATOR = new Creator<DownloadChapter>() {
+    public static final Creator<DownloadPage> CREATOR = new Creator<DownloadPage>() {
         @Override
-        public DownloadChapter createFromParcel(Parcel source) {
-            return new DownloadChapter(source);
+        public DownloadPage createFromParcel(Parcel source) {
+            return new DownloadPage(source);
         }
 
         @Override
-        public DownloadChapter[] newArray(int size) {
-            return new DownloadChapter[size];
+        public DownloadPage[] newArray(int size) {
+            return new DownloadPage[size];
         }
     };
 
     private Long _id;
 
-    private String source;
     private String url;
     private String parentUrl;
 
-    private String name;
     private String directory;
-
-    private int currentPage;
-    private int totalPages;
+    private String name;
     private int flag;
 
-    public DownloadChapter() {
+
+
+    /**
+     * Public empty constructor for DownloadPage class.
+     */
+    public DownloadPage() {
     }
 
-    private DownloadChapter(Parcel inputParcel) {
+    /**
+     * Private constructor for parcelable.
+     *
+     * @param inputParcel Input parcel.
+     */
+    private DownloadPage(Parcel inputParcel) {
         _id = inputParcel.readLong();
         if (_id < 0) {
             _id = null;
         }
 
-        source = inputParcel.readString();
         url = inputParcel.readString();
         parentUrl = inputParcel.readString();
 
-        name = inputParcel.readString();
         directory = inputParcel.readString();
 
-        currentPage = inputParcel.readInt();
-        totalPages = inputParcel.readInt();
+        name = inputParcel.readString();
+
         flag = inputParcel.readInt();
     }
 
     public Long get_id() {
         return _id;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 
     public String getUrl() {
@@ -86,14 +88,6 @@ public class DownloadChapter implements Parcelable {
         this.parentUrl = parentUrl;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDirectory() {
         return directory;
     }
@@ -102,20 +96,12 @@ public class DownloadChapter implements Parcelable {
         this.directory = directory;
     }
 
-    public int getCurrentPage() {
-        return currentPage;
+    public String getName() {
+        return name;
     }
 
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    public int getTotalPages() {
-        return totalPages;
-    }
-
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getFlag() {
@@ -139,15 +125,13 @@ public class DownloadChapter implements Parcelable {
             dest.writeLong(-1);
         }
 
-        dest.writeString(source);
         dest.writeString(url);
         dest.writeString(parentUrl);
 
-        dest.writeString(name);
         dest.writeString(directory);
 
-        dest.writeInt(currentPage);
-        dest.writeInt(totalPages);
+        dest.writeString(name);
+
         dest.writeInt(flag);
     }
 }
