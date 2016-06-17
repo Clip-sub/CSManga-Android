@@ -1,75 +1,73 @@
-package com.clipsub.csmanga.model;
+package com.clipsub.csmanga.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Model for "DownloadPage" entity.
+ * Model for each chapter download.
  */
-public class DownloadPage implements Parcelable {
+public class DownloadChapter implements Parcelable {
 
-    /**
-     * Class name for logging.
-     */
-    public static final String TAG = DownloadPage.class.getSimpleName();
+    public static final String TAG = DownloadChapter.class.getSimpleName();
 
-    /**
-     * Parcelable key for Parcelable implementation of this class.
-     */
     public static final String PARCELABLE_KEY = TAG + ":" + "ParcelableKey";
 
-    public static final Creator<DownloadPage> CREATOR = new Creator<DownloadPage>() {
+    public static final Creator<DownloadChapter> CREATOR = new Creator<DownloadChapter>() {
         @Override
-        public DownloadPage createFromParcel(Parcel source) {
-            return new DownloadPage(source);
+        public DownloadChapter createFromParcel(Parcel source) {
+            return new DownloadChapter(source);
         }
 
         @Override
-        public DownloadPage[] newArray(int size) {
-            return new DownloadPage[size];
+        public DownloadChapter[] newArray(int size) {
+            return new DownloadChapter[size];
         }
     };
 
     private Long _id;
 
+    private String source;
     private String url;
     private String parentUrl;
 
-    private String directory;
     private String name;
+    private String directory;
+
+    private int currentPage;
+    private int totalPages;
     private int flag;
 
-
-
-    /**
-     * Public empty constructor for DownloadPage class.
-     */
-    public DownloadPage() {
+    public DownloadChapter() {
     }
 
-    /**
-     * Private constructor for parcelable.
-     *
-     * @param inputParcel Input parcel.
-     */
-    private DownloadPage(Parcel inputParcel) {
+    private DownloadChapter(Parcel inputParcel) {
         _id = inputParcel.readLong();
         if (_id < 0) {
             _id = null;
         }
 
+        source = inputParcel.readString();
         url = inputParcel.readString();
         parentUrl = inputParcel.readString();
 
+        name = inputParcel.readString();
         directory = inputParcel.readString();
 
-        name = inputParcel.readString();
-
+        currentPage = inputParcel.readInt();
+        totalPages = inputParcel.readInt();
         flag = inputParcel.readInt();
     }
 
     public Long get_id() {
         return _id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getUrl() {
@@ -88,6 +86,14 @@ public class DownloadPage implements Parcelable {
         this.parentUrl = parentUrl;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDirectory() {
         return directory;
     }
@@ -96,12 +102,20 @@ public class DownloadPage implements Parcelable {
         this.directory = directory;
     }
 
-    public String getName() {
-        return name;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
     }
 
     public int getFlag() {
@@ -125,13 +139,15 @@ public class DownloadPage implements Parcelable {
             dest.writeLong(-1);
         }
 
+        dest.writeString(source);
         dest.writeString(url);
         dest.writeString(parentUrl);
 
+        dest.writeString(name);
         dest.writeString(directory);
 
-        dest.writeString(name);
-
+        dest.writeInt(currentPage);
+        dest.writeInt(totalPages);
         dest.writeInt(flag);
     }
 }

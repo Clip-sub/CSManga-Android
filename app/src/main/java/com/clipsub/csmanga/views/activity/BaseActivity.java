@@ -1,4 +1,4 @@
-package com.clipsub.csmanga.view.activity;
+package com.clipsub.csmanga.views.activity;
 
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;

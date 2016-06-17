@@ -1,31 +1,39 @@
-package com.clipsub.csmanga.model;
+package com.clipsub.csmanga.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Model class for a download of Manga entity.
+ * Model for "Manga" entity.
  */
-public class DownloadManga implements Parcelable {
+public class Manga implements Parcelable {
 
-    public static final String TAG = DownloadManga.class.getSimpleName();
+    /**
+     * Class name for logging.
+     */
+    public static final String TAG = Manga.class.getSimpleName();
 
+    /**
+     * Parcelable key for Parcelable implementation of this class.
+     */
     public static final String PARCELABLE_KEY = TAG + ":" + "ParcelableKey";
 
-    public static final Creator<DownloadManga> CREATOR = new Creator<DownloadManga>() {
+    /**
+     * Parcelable implementation interface.
+     */
+    public static final Creator<Manga> CREATOR = new Creator<Manga>() {
         @Override
-        public DownloadManga createFromParcel(Parcel source) {
-            return new DownloadManga(source);
+        public Manga createFromParcel(Parcel source) {
+            return new Manga(source);
         }
 
         @Override
-        public DownloadManga[] newArray(int size) {
-            return new DownloadManga[size];
+        public Manga[] newArray(int size) {
+            return new Manga[size];
         }
     };
 
     private Long _id;
-
     private String source;
     private String url;
 
@@ -34,22 +42,19 @@ public class DownloadManga implements Parcelable {
     private String description;
     private String genre;
     private String name;
-
     private boolean completed;
     private String thumbnailUrl;
 
-    /**
-     * Default empty constructor.
-     */
-    public DownloadManga() {
+    private int rank;
+    private Long updated;
+    private int updateCount;
+
+    private boolean initialized;
+
+    public Manga() {
     }
 
-    /**
-     * Constructor to use when re-constructing the Parcelable object.
-     *
-     * @param inputParcel The input parcelable.
-     */
-    private DownloadManga(Parcel inputParcel) {
+    private Manga(Parcel inputParcel) {
         _id = inputParcel.readLong();
         if (_id < 0) {
             _id = null;
@@ -63,9 +68,10 @@ public class DownloadManga implements Parcelable {
         description = inputParcel.readString();
         genre = inputParcel.readString();
         name = inputParcel.readString();
-
         completed = inputParcel.readByte() != 0;
         thumbnailUrl = inputParcel.readString();
+
+        initialized = inputParcel.readByte() != 0;
     }
 
     public Long get_id() {
@@ -144,6 +150,38 @@ public class DownloadManga implements Parcelable {
         this.thumbnailUrl = thumbnailUrl;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public Long getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Long updated) {
+        this.updated = updated;
+    }
+
+    public int getUpdateCount() {
+        return updateCount;
+    }
+
+    public void setUpdateCount(int updateCount) {
+        this.updateCount = updateCount;
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -159,6 +197,7 @@ public class DownloadManga implements Parcelable {
 
         dest.writeString(source);
         dest.writeString(url);
+
         dest.writeString(artist);
         dest.writeString(author);
         dest.writeString(description);
@@ -166,5 +205,11 @@ public class DownloadManga implements Parcelable {
         dest.writeString(name);
         dest.writeByte((byte) (completed ? 1 : 0));
         dest.writeString(thumbnailUrl);
+
+        dest.writeInt(rank);
+        dest.writeLong(updated);
+        dest.writeInt(updateCount);
+
+        dest.writeByte((byte) (initialized ? 1 : 0));
     }
 }

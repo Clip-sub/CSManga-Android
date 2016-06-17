@@ -1,12 +1,13 @@
-package com.clipsub.csmanga.util;
+package com.clipsub.csmanga.utils;
 
 /**
  * Values and utils for downloading operations.
  */
 public class DownloadUtils {
 
-    public static final long TIMEOUT = 100;
+    public static final String TAG = DownloadUtils.class.getSimpleName();
 
+    public static final long TIMEOUT = 100;
     public static final int FLAG_FAILED = -200;
     public static final int FLAG_PAUSED = -100;
     public static final int FLAG_PENDING = 0;
@@ -18,6 +19,6 @@ public class DownloadUtils {
      * Private constructor.
      */
     private DownloadUtils() {
-        throw new AssertionError();
+        throw new AssertionError(TAG + ": Cannot be initialized.");
     }
 }

@@ -1,4 +1,4 @@
-package com.clipsub.csmanga.view.fragment;
+package com.clipsub.csmanga.views.fragment;
 
 /**
  * Created by quan.pv on 4/4/2016.

@@ -1,4 +1,4 @@
-package com.clipsub.csmanga.view.widget;
+package com.clipsub.csmanga.views.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;

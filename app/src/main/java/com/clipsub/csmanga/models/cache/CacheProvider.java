@@ -1,7 +1,7 @@
-package com.clipsub.csmanga.model.cache;
+package com.clipsub.csmanga.models.cache;
 
 import com.clipsub.csmanga.CSMangaApplication;
-import com.clipsub.csmanga.util.DiskUtils;
+import com.clipsub.csmanga.utils.DiskUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.BufferedOutputStream;

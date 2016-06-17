@@ -1,10 +1,9 @@
-package com.clipsub.csmanga.util;
+package com.clipsub.csmanga.utils;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.text.TextUtils;
-
-import com.clipsub.csmanga.CSMangaApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,6 +15,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
+
+import okio.BufferedSink;
+import okio.BufferedSource;
+import okio.Okio;
 
 /**
  * Various functions for disk caching and helper.
@@ -31,13 +34,13 @@ public class DiskUtils {
     // http://stackoverflow.com/questions/13976982/removable-storage-external-sdcard-path-by-manufacturers
     // http://stackoverflow.com/questions/11281010/how-can-i-get-external-sd-card-path-for-android-4-0
 
-    public static String[] getStorageDirectories() {
+    public static String[] getStorageDirectories(Context context) {
         // Final set of paths.
         final Set<String> storageDirectories = new HashSet<String>();
-        storageDirectories.add(CSMangaApplication.getInstance().getFilesDir().getAbsolutePath());
+        storageDirectories.add(context.getFilesDir().getAbsolutePath());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            File[] directories = CSMangaApplication.getInstance().getExternalFilesDirs(null);
+            File[] directories = context.getExternalFilesDirs(null);
             if (directories != null) {
                 for (File storage : directories) {
                     if (storage != null) {
@@ -46,7 +49,9 @@ public class DiskUtils {
                 }
             }
         } else {
-            // Physical SD card (not emulated).
+            /**
+             * Physical SD card (not emulated).
+             */
             final String rawExternalStorage = System.getenv("EXTERNAL_STORAGE");
             /**
              * All secondary SD card (all exclude primary), separated by ":".
@@ -61,12 +66,12 @@ public class DiskUtils {
                     // EXTERNAL_STORAGE undefined, falling back to the default.
                     storageDirectories.add("/storage/sdcard0"
                             + File.separator
-                            + CSMangaApplication.getInstance().getPackageName());
+                            + context.getPackageName());
                 } else {
                     // EXTERNAL_STORAGE defined, get it at once.
                     storageDirectories.add(rawExternalStorage
                             + File.separator
-                            + CSMangaApplication.getInstance().getPackageName());
+                            + context.getPackageName());
                 }
             }
             // If device has emulated storage.
@@ -97,13 +102,13 @@ public class DiskUtils {
                 if (TextUtils.isEmpty(rawUserId)) {
                     storageDirectories.add(rawEmulatedStorageTarget
                             + File.separator
-                            + CSMangaApplication.getInstance().getPackageName());
+                            + context.getPackageName());
                 } else {
                     storageDirectories.add(rawEmulatedStorageTarget
                             + File.separator
                             + rawUserId
                             + File.separator
-                            + CSMangaApplication.getInstance().getPackageName());
+                            + context.getPackageName());
                 }
             }
 
@@ -113,7 +118,7 @@ public class DiskUtils {
                 for (int index = 0; index < rawSecondaryStorages.length; index++) {
                     storageDirectories.add(rawSecondaryStorages[index]
                             + File.separator
-                            + CSMangaApplication.getInstance().getPackageName());
+                            + context.getPackageName());
                 }
             }
         }
@@ -130,9 +135,9 @@ public class DiskUtils {
     public static String hashKeyForDisk(String key) {
         String cacheKey;
         try {
-            final MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(key.getBytes());
-            cacheKey = bytesToHexString(messageDigest.digest());
+            final MessageDigest mDigest = MessageDigest.getInstance("MD5");
+            mDigest.update(key.getBytes());
+            cacheKey = bytesToHexString(mDigest.digest());
         } catch (NoSuchAlgorithmException e) {
             cacheKey = String.valueOf(key.hashCode());
         }
@@ -204,6 +209,49 @@ public class DiskUtils {
 
             if (outputStream != null) {
                 outputStream.close();
+            }
+        }
+
+        return writeFile;
+    }
+
+    /**
+     * Save BufferedSource with Okio to directory.
+     *
+     * @param bufferedSource The buffered source powered by Okio.
+     * @param directory      The directory path.
+     * @param name           The desired file name.
+     * @return The result file.
+     */
+    public static File saveBufferedSourceToDirectory(BufferedSource bufferedSource, String directory, String name)
+            throws IOException {
+        File fileDirectory = new File(directory);
+        if (!fileDirectory.exists()) {
+            if (!fileDirectory.mkdirs()) {
+                throw new IOException("Failed to create directory");
+            }
+        }
+
+        File writeFile = new File(fileDirectory, name);
+        if (writeFile.exists()) {
+            if (writeFile.delete()) {
+                writeFile = new File(fileDirectory, name);
+            } else {
+                throw new IOException("Failed to delete existing file or overwrite file");
+            }
+        }
+
+        BufferedSink bufferedSink = null;
+        try {
+            bufferedSink = Okio.buffer(Okio.sink(writeFile));
+            bufferedSink.writeAll(bufferedSource);
+        } finally {
+            if (bufferedSource != null) {
+                bufferedSource.close();
+            }
+
+            if (bufferedSink != null) {
+                bufferedSink.close();
             }
         }
 
