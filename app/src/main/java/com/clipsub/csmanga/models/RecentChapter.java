@@ -26,7 +26,7 @@ public class RecentChapter implements Parcelable {
     private String source;
     private String url;
     private String parentUrl;
-
+    private String parentName;
     private String name;
     private String thumbnailUrl;
 
@@ -47,7 +47,7 @@ public class RecentChapter implements Parcelable {
         source = inputParcel.readString();
         url = inputParcel.readString();
         parentUrl = inputParcel.readString();
-
+        parentName = inputParcel.readString();
         name = inputParcel.readString();
         thumbnailUrl = inputParcel.readString();
 
@@ -82,6 +82,14 @@ public class RecentChapter implements Parcelable {
 
     public void setParentUrl(String parentUrl) {
         this.parentUrl = parentUrl;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
     public String getName() {
@@ -140,7 +148,7 @@ public class RecentChapter implements Parcelable {
         dest.writeString(source);
         dest.writeString(url);
         dest.writeString(parentUrl);
-
+        dest.writeString(parentName);
         dest.writeString(name);
         dest.writeString(thumbnailUrl);
 
