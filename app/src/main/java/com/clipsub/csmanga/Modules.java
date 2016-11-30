@@ -1,9 +1,5 @@
 package com.clipsub.csmanga;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-
 public class Modules {
     public static final String TAG = Modules.class.getSimpleName();
 
