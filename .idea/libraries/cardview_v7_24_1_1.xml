@@ -1,3 +1,4 @@
+<<<<<<< HEAD:.idea/libraries/cardview_v7_24_1_1.xml
 <component name="libraryTable">
   <library name="cardview-v7-24.1.1">
     <CLASSES>
@@ -9,4 +10,17 @@
       <root url="jar://$PROJECT_DIR$/../SDK/extras/android/m2repository/com/android/support/cardview-v7/24.1.1/cardview-v7-24.1.1-sources.jar!/" />
     </SOURCES>
   </library>
+=======
+<component name="libraryTable">
+  <library name="cardview-v7-24.1.1">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.1.1/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.1.1/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../SDK/extras/android/m2repository/com/android/support/cardview-v7/24.1.1/cardview-v7-24.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+>>>>>>> 78ab0b8a13b06d156a61db6d7ae3c71d13993a7f:.idea/libraries/cardview_v7_24_1_1.xml
 </component>
