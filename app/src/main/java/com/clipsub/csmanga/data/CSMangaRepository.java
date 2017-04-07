@@ -13,19 +13,19 @@ import rx.Observable;
  */
 public interface CSMangaRepository {
 
-    public Observable<String> getNameFromPreferenceSource();
+  public Observable<String> getNameFromPreferenceSource();
 
-    public Observable<String> getBaseUrlFromPreferenceSource();
+  public Observable<String> getBaseUrlFromPreferenceSource();
 
-    public Observable<String> getInitialUpdateUrlFromPreferenceSource();
+  public Observable<String> getInitialUpdateUrlFromPreferenceSource();
 
-    public Observable<List<String>> getGenresFromPreferenceSource();
+  public Observable<List<String>> getGenresFromPreferenceSource();
 
-    public Observable<UpdatePageMarker> pullLatestUpdatesFromNetwork(UpdatePageMarker updatePageMarker);
+  public Observable<UpdatePageMarker> pullLatestUpdatesFromNetwork(UpdatePageMarker updatePageMarker);
 
-    public Observable<Manga> pullMangaFromNetwork(String source, String mangaUrl);
+  public Observable<Manga> pullMangaFromNetwork(String source, String mangaUrl);
 
-    public Observable<List<Chapter>> pullChaptersFromNetwork(String source, String mangaUrl, String mangaName);
+  public Observable<List<Chapter>> pullChaptersFromNetwork(String source, String mangaUrl, String mangaName);
 
-    public Observable<String> pullImageUrlsFromNetwork(String source, String chapterUrl);
+  public Observable<String> pullImageUrlsFromNetwork(String source, String chapterUrl);
 }
