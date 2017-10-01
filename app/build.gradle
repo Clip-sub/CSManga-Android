@@ -28,9 +28,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     // Kotlin:
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2-3"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.50"
     // Android Support Library:
-    def supportVersion = "26.0.0"
+    def supportVersion = "26.0.1"
     compile "com.android.support:support-v4:$supportVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
@@ -71,6 +71,12 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.facebook.stetho:stetho-okhttp:1.5.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    // Test dependencies:
+    compile 'com.github.BlackBoxVision:material-wheel-view:v0.0.1'
+    compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
+    compile 'com.contrarywind:Android-PickerView:3.2.6'
+    compile 'com.github.florent37:singledateandtimepicker:1.2.1'
 }
 
 
